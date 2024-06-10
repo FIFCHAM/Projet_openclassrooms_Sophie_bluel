@@ -63,9 +63,6 @@ galleryCategory()
 // ------------------- creation du filtre des projets
 async function filterProjects() {
     const allWorks = await displayWorks();
-
-
-    let index = 0;
     const btnfilter = document.querySelectorAll('.filter-item');
     console.log(btnfilter);
     btnfilter[0].classList.add('filter-itemactive')
