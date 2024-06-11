@@ -32,7 +32,7 @@ const messageDiv = document.querySelector('#message')
                                                 window.location.href = '../index.html';
                                                 } else {
                                                     const errorData = await response.json();
-                                                    messageDiv.textContent = errorData.message && 'Mot de passe ou adresse email non-valide';
+                                                    messageDiv.textContent =  ` "Erreur dans l'identifiant ou le mot de passe" `;
                                                     
                                                     }
                                                     }catch (error) {

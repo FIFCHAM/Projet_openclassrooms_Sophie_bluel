@@ -7,6 +7,7 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
+	<script src="https://kit.fontawesome.com/e94989c816.js" crossorigin="anonymous"></script>
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
 </head>
@@ -36,6 +37,11 @@
 		</section>
 		<section id="portfolio">
 			<h2>Mes Projets</h2>
+			<a class="edit-btn" href="http://">
+				<i class="fa-regular fa-pen-to-square">
+					<p>modifier</p>
+				</i>
+			</a>
 			<nav class="filterproject">
 				<ul class="filter-item" id="0" name="Tous">Tous</ul>
 				
@@ -67,6 +73,14 @@
 		</ul>
 	</nav>
 </footer>
+<aside id="container-modal">
+	<div class="modal">
+		<h3>Galerie photo</h3>
+		<div class="modal-gallery"></div>
+		<hr>
+		<button>Ajouter une photo</button>
+	</div>
+</aside>
 <script src="/assets/script.js" ></script>
 </body>
 </html>

@@ -91,3 +91,24 @@ async function filterProjects() {
 }
 filterProjects()
 
+//-------------------------- modale-------------------------
+const modalgallery = document.querySelector('.modal-gallery')
+async function getWorksmodal() {
+    const works = await displayWorks();
+    works.forEach(work => {
+        galleryWorksmodal(work)
+    });
+}
+getWorksmodal();
+
+function galleryWorksmodal(work) {
+    const figuremodal =
+        ` <figure data-id="${work.category.id}">
+           <img src=${work.imageUrl} alt="Abajour Tahina">
+           </figure>                                             `
+    modalgallery.insertAdjacentHTML("beforeend", figuremodal);
+
+}
+
+
+
