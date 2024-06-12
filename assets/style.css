@@ -220,6 +220,7 @@ li:hover {
 
 #portfolio h2 {
 	text-align: center;
+	margin-right: 32px;
 	margin-bottom: 1em;
 	margin-top: 132px;
 }
@@ -413,13 +414,18 @@ color: #3D3D3D;
     color: red;
     text-align: center;
 }
-.edit-btn{
+.project-title{
 	display: flex;
-	position: relative;
-    left: 700px;
-    bottom: 50px;
+	justify-content: center;
+	align-items:end;
+}
+.edit-btn{
+
+	margin-bottom: 34px;
+    margin-right: 31px;
 	text-decoration: none;
 	color: #000;
+	cursor: pointer;
 }
 .edit-btn i{
 	display: flex;
@@ -434,7 +440,7 @@ text-align: center;
 
 }
 #container-modal{
-	display: flex;
+	display: none;
 	justify-content: center;
 	align-items: center;
 	position: fixed;
@@ -446,6 +452,7 @@ background: rgba(0, 0, 0, 0.8);
 
 }
 .modal{
+	position: relative;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -453,7 +460,17 @@ background: rgba(0, 0, 0, 0.8);
 	background: #FFFFFF;
 	width: 630px;
 height: 688px;
-border-radius: 10px 0px 0px 0px;
+border-radius: 10px;
+}
+.modal i{
+	position:absolute;
+	top: 26px;
+	right: 32px;
+	width: 12px;
+	height: 12px;
+	color: #000;
+	cursor: pointer;
+
 }
 .modal h3{
 	font-family: 'Work Sans';
@@ -496,6 +513,26 @@ margin-top: 38px;
 .modal-gallery img{
 	width: 76.61px;
 height: 102.57px;
+
+
+}
+.figure-modal{
+	position: relative;
+}
+.figure-modal i{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	top: 6px;
+	right: 6px;
+	width: 17px;
+height: 17px;
+font-size: x-small;
+color: #FFFFFF;
+border-radius: 2px;
+background: #000;
+cursor: pointer;
 
 
 }

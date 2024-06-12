@@ -92,7 +92,12 @@ async function filterProjects() {
 filterProjects()
 
 //-------------------------- modale-------------------------
-const modalgallery = document.querySelector('.modal-gallery')
+const modalgallery = document.querySelector('.modal-gallery');
+const editbtn = document.querySelector('.edit-btn');
+const containermodal = document.querySelector('#container-modal');
+const closemodalbtn = document.querySelector('.fa-xmark');
+const deletebtn = document.querySelector('.fa-trash-can')
+
 async function getWorksmodal() {
     const works = await displayWorks();
     works.forEach(work => {
@@ -103,12 +108,37 @@ getWorksmodal();
 
 function galleryWorksmodal(work) {
     const figuremodal =
-        ` <figure data-id="${work.category.id}">
+        ` <figure class="figure-modal" data-id="${work.category.id}">
            <img src=${work.imageUrl} alt="Abajour Tahina">
-           </figure>                                             `
+                      <i class="fa-solid fa-trash-can"></i>
+            </figure>                                             `
     modalgallery.insertAdjacentHTML("beforeend", figuremodal);
 
 }
+//------------------ open modal-----------------------------
+function openModal(){
+containermodal.style.display='flex'
+};
+editbtn.addEventListener('click',openModal);
+//------------------- close modal ----------------------------
+function closeModal(){
+containermodal.style.display='none'
+};
+closemodalbtn.addEventListener('click',closeModal);
+containermodal.addEventListener('click',closeModal);
+
+//------------------  delete project ----------------------------
+
+ async function deleteWork(){
+    const works = await displayWorks();
+    works.forEach(work => {
+        
+    });
+
+
+}
+deletebtn.addEventListener('click',deleteWork);
+
 
 
 
