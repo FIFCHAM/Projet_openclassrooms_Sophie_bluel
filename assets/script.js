@@ -1,51 +1,77 @@
-console.log('hello world');
+
+console.log();
 // ------------------- Les variables
 const gallery = document.querySelector('.gallery ');
 const filternav = document.querySelector('.filterproject');
+    async function init(){
+        
+        const connected =  localStorage.getItem('users');
+        console.log(connected);
+        if(connected){
+            console.log('connecté');
+            getWorks()
+            
+            loopGalleryworks()
+            }
+            else{
+                //loginPage()
+                getWorks()
+                loopGalleryworks()
+                galleryCategory()
+                getCategory()
+                filterProjects()
+
+            console.log('disconected');
+        }
+    
+    }
+    init()
+    /*function loginPage() {
+        const btnlogin = document.querySelector('.login');
+        btnlogin.addEventListener('click',function() {
+            window.location.href='../login.html'
+            
+        })
+    }*/
 
 //-------------------- recupérations des travaux dans l'API 
-async function displayWorks() {
+async function getWorks() {
     const reponse = await fetch("http://localhost:5678/api/works");
-
     return await reponse.json()
-
 }
-displayWorks()
 
 //---------------------- récupérations des categories dans l'API
-async function displayCategory() {
+async function getCategory() {
 
     const reponse = await fetch('http://localhost:5678/api/categories');
 
     return await reponse.json();
 }
-displayCategory()
 
 
 //------------- creation des projets dans le DOM 
-async function getWorks() {
-    const works = await displayWorks();
+async function loopGalleryworks(){
+    const works = await getWorks()
     works.forEach(work => {
         galleryWorks(work)
-    });
+})
 }
-getWorks()
+async function galleryWorks(work) {
+        const figure =
+    ` <figure data-id="${work.category.id}">
+    <img src=${work.imageUrl} alt="Abajour Tahina">
+    <figcaption>${work.title}</figcaption>
+    </figure>                                             `
+gallery.insertAdjacentHTML("beforeend", figure);
+};
 
-function galleryWorks(work) {
-    const figure =
-        ` <figure data-id="${work.category.id}">
-           <img src=${work.imageUrl} alt="Abajour Tahina">
-           <figcaption>${work.title}</figcaption>
-           </figure>                                             `
-    gallery.insertAdjacentHTML("beforeend", figure);
 
-}
 
 
 //--------------- creation des categories dans le DOM
 
 async function galleryCategory() {
-    const categories = await displayCategory();
+    const categories = await getCategory();
     categories.forEach(category => {
         const filteritem =
             `<ul class="filter-item" id="${category.id}">
@@ -58,11 +84,10 @@ async function galleryCategory() {
     });
 
 }
-galleryCategory()
 
 // ------------------- creation du filtre des projets
 async function filterProjects() {
-    const allWorks = await displayWorks();
+    const allWorks = await getWorks();
     const btnfilter = document.querySelectorAll('.filter-item');
     console.log(btnfilter);
     btnfilter[0].classList.add('filter-itemactive')
@@ -84,22 +109,22 @@ async function filterProjects() {
                 })
             }
             else {
-                getWorks()
+                loopGalleryworks()
             }
         });
     });
 }
-filterProjects()
 
 //-------------------------- modale-------------------------
 const modalgallery = document.querySelector('.modal-gallery');
 const editbtn = document.querySelector('.edit-btn');
 const containermodal = document.querySelector('#container-modal');
 const closemodalbtn = document.querySelector('.fa-xmark');
-const deletebtn = document.querySelector('.fa-trash-can')
+const deletebtn = [...document.querySelectorAll('.fa-trash-can')];
+console.log(deletebtn);
 
 async function getWorksmodal() {
-    const works = await displayWorks();
+    const works = await getWorks();
     works.forEach(work => {
         galleryWorksmodal(work)
     });
@@ -137,7 +162,11 @@ containermodal.addEventListener('click',closeModal);
 
 
 }
-deletebtn.addEventListener('click',deleteWork);
+deletebtn.forEach(e => {
+    e.addEventListener('click',deleteWork);
+    console.log(e);
+    
+});
 
 
 
