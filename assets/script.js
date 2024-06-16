@@ -2,16 +2,17 @@
 console.log();
 // ------------------- Les variables
 const gallery = document.querySelector('.gallery ');
-const filternav = document.querySelector('.filterproject');
+const filternav = document.querySelector('#filterproject');
     async function init(){
         
-        const connected =  localStorage.getItem('users');
-        console.log(connected);
-        if(connected){
+        const connected =  localStorage.getItem('connected');
+        
+        if(connected=='true'){
             console.log('connecté');
             getWorks()
             
             loopGalleryworks()
+            window.localStorage.setItem('connected','false');
             }
             else{
                 //loginPage()
@@ -26,13 +27,7 @@ const filternav = document.querySelector('.filterproject');
     
     }
     init()
-    /*function loginPage() {
-        const btnlogin = document.querySelector('.login');
-        btnlogin.addEventListener('click',function() {
-            window.location.href='../login.html'
-            
-        })
-    }*/
+    
 
 //-------------------- recupérations des travaux dans l'API 
 async function getWorks() {
@@ -72,12 +67,18 @@ gallery.insertAdjacentHTML("beforeend", figure);
 
 async function galleryCategory() {
     const categories = await getCategory();
+    const itemall = `<li class="filter-item" id="0" name="Tous">Tous</li>`
+    filternav.insertAdjacentHTML("beforeend",itemall);
     categories.forEach(category => {
         const filteritem =
-            `<ul class="filter-item" id="${category.id}">
-            ${category.name}
-            </ul>
-            `
+            `   
+                <li class="filter-item" id="${category.id}">
+                    
+                    ${category.name}
+                </li>
+             `;
+           
+
         filternav.insertAdjacentHTML("beforeend", filteritem);
         console.log(category);
 
@@ -115,10 +116,13 @@ async function filterProjects() {
     });
 }
 
+//------------------------- edit mod----------------------------------
+
 //-------------------------- modale-------------------------
+const projetitle = document.querySelector('#project-title')
 const modalgallery = document.querySelector('.modal-gallery');
-const editbtn = document.querySelector('.edit-btn');
 const containermodal = document.querySelector('#container-modal');
+console.log(containermodal);
 const closemodalbtn = document.querySelector('.fa-xmark');
 const deletebtn = [...document.querySelectorAll('.fa-trash-can')];
 console.log(deletebtn);
@@ -141,10 +145,25 @@ function galleryWorksmodal(work) {
 
 }
 //------------------ open modal-----------------------------
+//----------- creation du btn ouverture de la modale-------------
+const editbtn= `<a class="edit-btn" >
+                    <i class="fa-regular fa-pen-to-square">
+                        <p>modifier</p>
+                        </i>
+                    </a>`;
+projetitle.insertAdjacentHTML("beforeend",editbtn);
+console.log(editbtn);
+const btnmodal = document.querySelector(".edit-btn");
+console.log(btnmodal);
+
+
+
 function openModal(){
-containermodal.style.display='flex'
+containermodal.style.display='flex';
 };
-editbtn.addEventListener('click',openModal);
+btnmodal.addEventListener('click',openModal);
+
+
 //------------------- close modal ----------------------------
 function closeModal(){
 containermodal.style.display='none'
@@ -155,7 +174,7 @@ containermodal.addEventListener('click',closeModal);
 //------------------  delete project ----------------------------
 
  async function deleteWork(){
-    const works = await displayWorks();
+    const works = await getWorks();
     works.forEach(work => {
         
     });

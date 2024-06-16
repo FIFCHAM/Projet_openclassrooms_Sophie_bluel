@@ -2,8 +2,9 @@
 
 const formLogin = document.querySelector("#login-form")
 console.log(formLogin);
-const messageDiv = document.querySelector('#message')
-
+const messageDiv = document.querySelector('#message');
+const connected = window.localStorage.getItem('connected');
+console.log(connected);
 
 formLogin.addEventListener("submit", function (e) {
     e.preventDefault();
@@ -17,8 +18,8 @@ formLogin.addEventListener("submit", function (e) {
     
     
     
-     localStorage.setItem('users','S0phie');
-    const savusers = localStorage.getItem('users')
+     
+    
 
     async function userLogin() {
         try {
@@ -32,14 +33,13 @@ formLogin.addEventListener("submit", function (e) {
 
             if (response.ok ) {
                 const data = await response.json();
-                }
-                if(savusers){
-                  window.location.href= "../index.html"
+                console.log(data);
+               
+                window.localStorage.setItem('connected','true');
+                window.location.href= "../index.html"
 
-                }                  
-                    
-                
-         
+            }
+            
             else {
                 const errorData = await response.json();
                 messageDiv.textContent = ` "Erreur dans l'identifiant ou le mot de passe" `;

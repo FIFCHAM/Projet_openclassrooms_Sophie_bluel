@@ -175,19 +175,19 @@ h2 {
 	color: #1D6154
 }
 
-nav ul {
+header nav ul {
 	display: flex;
 	align-items: center;
 	list-style-type: none;
 
 }
 
-nav li {
+header nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
 }
 
-li:hover {
+header li:hover {
 	color: #B1663C;
 }
 
@@ -228,7 +228,7 @@ li:hover {
 	display: flex;
 }
 
-.filterproject {
+#filterproject  {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -244,11 +244,12 @@ li:hover {
 	font-family: Syne;
 	font-size: 16px;
 	font-weight: 700;
-	line-height: 19.2px;
+	line-height: 35px;
 	text-align: center;
 	color: #1d6154;
 	padding-left: 20px;
 	padding-right: 20px;
+	
 }
 
 
@@ -259,7 +260,7 @@ li:hover {
 	font-family: Syne;
 	font-size: 16px;
 	font-weight: 700;
-	line-height: 19.2px;
+	line-height: 35px;
 	text-align: center;
 	color: #ffffff;
 	padding-left: 20px;
@@ -414,7 +415,7 @@ color: #3D3D3D;
     color: red;
     text-align: center;
 }
-.project-title{
+#project-title{
 	display: flex;
 	justify-content: center;
 	align-items:end;
