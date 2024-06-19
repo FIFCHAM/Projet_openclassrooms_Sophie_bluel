@@ -12,6 +12,10 @@
 	<link rel="stylesheet" href="./assets/style.css">
 </head>
 <body>
+	<span id="banner-editmode">
+		
+	</span>
+	
 	<header>
 		<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 		<nav>
@@ -85,6 +89,29 @@
 		<button>Ajouter une photo</button>
 	</div>
 </aside>
+<div class="add-photo">
+	<i class="fa-solid fa-arrow-left"></i>
+	<i class="fa-solid fa-xmark"></i>
+	<h3>Ajout photo</h3>
+	<div class="photo-container">
+		<i class="fa-regular fa-image"></i>
+		<button>+ Ajouter photo</button>
+		<p>jpg, png : 4mo max</p>
+	</div>
+	<form class="form-add" method="post">
+		<label for="Titre">Titre</label>
+		<input type="text" name="Titre" id="" >
+		<label for="Catégorie">Catégorie</label>
+		<select name="Catégories" id="">
+			<option value="Objets">Objets</option>
+			<option value="Appartements">Appartements</option>
+			<option value="Hotels & restaurants">Hotels & restaurants</option>
+		</select> 
+		<hr>
+		<button type="submit">Valider</button>
+	</form>
+
+</div>
 <script src="/assets/script.js"  ></script>
 </body>
 </html>

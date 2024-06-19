@@ -3,8 +3,12 @@
 const formLogin = document.querySelector("#login-form")
 console.log(formLogin);
 const messageDiv = document.querySelector('#message');
-const connected = window.localStorage.getItem('connected');
-console.log(connected);
+
+
+//----------------creation d'une class pour onglet login---
+const loginnav = document.querySelectorAll('li');
+console.log(loginnav);
+loginnav[2].classList.add('btnlogin');
 
 formLogin.addEventListener("submit", function (e) {
     e.preventDefault();
@@ -33,9 +37,9 @@ formLogin.addEventListener("submit", function (e) {
 
             if (response.ok ) {
                 const data = await response.json();
-                console.log(data);
-               
-                window.localStorage.setItem('connected','true');
+                console.log(data.token);
+               const token = data.token;
+                window.localStorage.setItem('token',token);
                 window.location.href= "../index.html"
 
             }
