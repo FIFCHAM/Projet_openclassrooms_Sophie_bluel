@@ -481,7 +481,7 @@ text-align: center;
 height: 100%;
 top: 0;
 left: 0;
-background: rgba(0, 0, 0, 0.8);
+background: rgba(0, 0, 0, 0.4);
 
 }
 .modal{
@@ -532,6 +532,7 @@ line-height: 16.8px;
 text-align: center;
 border: none;
 margin-top: 38px;
+cursor: pointer;
 }
 .modal-gallery{
 	
@@ -569,6 +570,9 @@ cursor: pointer;
 
 }
 /******************************* modale add-photo ***********************/
+.container-add-photo{
+	display: none;
+}
 .add-photo{
 	position: relative;
 	display: flex;

@@ -2,45 +2,47 @@
 
 // ------------------- Les variables
 const gallery = document.querySelector('.gallery ');
+// console.log(gallery);
 const filternav = document.querySelector('#filterproject');
 const projetitle = document.querySelector('#project-title')
-const modalgallery = document.querySelector('.modal-gallery');
-const containermodal = document.querySelector('#container-modal');
-const containeraddphoto = document.querySelector('.container-add-photo');
+
+
 // console.log(containeraddphoto);
 const closemodalbtn = document.querySelector('.fa-xmark');
 // console.log(closemodalbtn);
 const headerbanner = document.querySelector('#banner-editmode');
 const login = document.querySelectorAll('li');
 const btnnavlogin = login[2];
-const token ='Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcxODc5NjczMiwiZXhwIjoxNzE4ODgzMTMyfQ.ae07vOdnJCfTf3kMJRZ9T-YdxQyE-4Jc5T2RN5pYK7w';
 // console.log(token);
+const token = localStorage.getItem('token');
+
 
 
 async function init(){
     
-    const connected =  localStorage.getItem('token');
+    
+    const connected = token ? true : false;
     
     if(connected){
         // console.log('connecté');
-        getWorks()
-        loopGalleryworks()
-    
-        galleryWorksmodal()
+        const works= await getWorks()
+       loopGalleryworks(works)
+        galleryWorksmodal(works)
         bannerEdit()
         openModal()
         closeModal()
         logOut()
-        window.localStorage.removeItem('token');
         
     }
     else{
         
-        getWorks()
-        loopGalleryworks()
-        galleryCategory()
-        getCategory()
-        filterProjects()
+        const works= await getWorks()
+        loopGalleryworks(works)
+    
+
+        const categories=await getCategory()
+        galleryCategory(categories)
+        filterProjects(works)
         logIn()
         
         // console.log('disconected');
@@ -52,6 +54,7 @@ init()
 //------------------- Se diriger vers page deconnexion ----------------------
 function logIn(){
     btnnavlogin.addEventListener('click',function(e){
+        e.preventDefault()
         // console.log(e);
         window.location.href= "../login.html"
     });
@@ -59,7 +62,9 @@ function logIn(){
 function logOut(){
     btnnavlogin.textContent='logout'
     btnnavlogin.addEventListener('click',function(e){
+        e.preventDefault()
         // console.log(e);
+        window.localStorage.removeItem('token');
         window.location.href= "../index.html"
         
         
@@ -69,7 +74,8 @@ function logOut(){
 //-------------------- recupérations des travaux dans l'API 
 async function getWorks() {
     const reponse = await fetch("http://localhost:5678/api/works");
-    return await reponse.json()
+    return  reponse.json()
+    
 }
 
 //---------------------- récupérations des categories dans l'API
@@ -77,34 +83,35 @@ async function getCategory() {
     
     const reponse = await fetch('http://localhost:5678/api/categories');
     
-    return await reponse.json();
+    return reponse.json();
 }
 
 
 //------------- creation des projets dans le DOM 
-async function loopGalleryworks(){
-    const works = await getWorks();
-    works.forEach(work => {
+ async function loopGalleryworks(works){
+    
+     works.forEach(work => {
+        
         galleryWorks(work)
+    
     });
-}
+    
+ }
 async function galleryWorks(work) {
-    gallery.innerHTML=""
-    const figure =
-    ` <figure data-id="${work.category.id}">
-    <img src=${work.imageUrl} alt="Abajour Tahina">
-    <figcaption>${work.title}</figcaption>
-    </figure>                                             `
-    gallery.insertAdjacentHTML("beforeend", figure);
+        const figure =
+        ` <figure class="figure-work" id="${work.id}">
+        <img src=${work.imageUrl} alt="Abajour Tahina">
+        <figcaption>${work.title}</figcaption>
+        </figure>                                             `
+        gallery.insertAdjacentHTML("beforeend", figure);
     
 }
 
 
-
 //--------------- creation des categories dans le DOM
 
-async function galleryCategory() {
-    const categories = await getCategory();
+ async function galleryCategory(categories) {
+    
     const itemall = `<li class="filter-item" id="0" name="Tous">Tous</li>`
     filternav.insertAdjacentHTML("beforeend",itemall);
     categories.forEach(category => {
@@ -125,8 +132,8 @@ async function galleryCategory() {
 }
 
 // ------------------- creation du filtre des projets
-async function filterProjects() {
-    const allWorks = await getWorks();
+async function filterProjects(works) {
+    //const allWorks = await getWorks();
     const btnfilter = document.querySelectorAll('.filter-item');
     // console.log(btnfilter);
     btnfilter[0].classList.add('filter-itemactive')
@@ -140,15 +147,16 @@ async function filterProjects() {
 // --------------------- afficher les projets par categories
             gallery.innerHTML = "";
             if (e.id !== "0") {
-                const filtercategoryworks = allWorks.filter((work) => work.category.id == e.id);
+                const filtercategoryworks = works.filter((work) => work.category.id == e.id);
                 filtercategoryworks.forEach((work) => {
 
+                    
                     galleryWorks(work)
-
                 })
             }
             else {
-                loopGalleryworks()
+                // loopGalleryworks(works)
+                loopGalleryworks(works)
             }
         });
     });
@@ -157,14 +165,17 @@ async function filterProjects() {
 //------------------------- edit mod----------------------------------
 
 //-------------------------- modale-------------------------
+const modalgallery = document.querySelector('.modal-gallery');
+const containermodal = document.querySelector('#container-modal');
+const modal = document.querySelector('.modal');
 
-async function galleryWorksmodal() {
-    modalgallery.innerHTML=""
-    const works = await getWorks();
+async function galleryWorksmodal(works) {
+     //modalgallery.innerHTML="";
+    
     works.forEach(work => {
         
         const figuremodal =
-        ` <figure class="figure-modal" data-id="${work.category.id}">
+        ` <figure class="figure-modal" id="${work.id}">
         <img src=${work.imageUrl} alt="Abajour Tahina">
         <i class="fa-solid fa-trash-can" id=${work.id}></i>
         </figure>                                             `
@@ -176,38 +187,58 @@ async function galleryWorksmodal() {
 }
 //------------------  delete project ----------------------------
 
- function deleTeproject(){
+ async function deleTeproject(){
+    const works = await getWorks()
+    
     const trashbtn =document.querySelectorAll('.fa-trash-can');
     // console.log(trashbtn);
     trashbtn.forEach(e => {
-        e.addEventListener('click',function(e){
+        e.addEventListener('click',async(e)=>{
+            e.preventDefault();
             const trash = e.target.id;
-         fetch('http://localhost:5678/api/works/'+ trash ,{
-            method:'DELETE',
-            headers: {
-                "Content-Type": "application/json",
-                'Authorization':token
-              },
-          }).then(response=>{
-            if(!response.ok){
-                throw new Error('Erreur de la requête : '+ response.statusText);
-            }
-            return response.json();
-          })
-        .then(data=>{
-            //console.log('Réponse du serveur :', data);
-
-        })
-        .catch(error => {
-            console.error('Erreur :', error);
-          });
             
+            
+            const parentremove =e.target.offsetParent;
+            console.log(trash);
+            const response = await fetch('http://localhost:5678/api/works/'+ trash ,{
+                method:'DELETE',
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization':`Bearer ${token}` 
+                },
+            })
+            //   }).then(response=>{
+                if(!response.ok){
+                    
+                    throw new Error('Erreur de la requête : '+ response.statusText);
+                }
+                else{
+                    console.log(response);
+                    
+                    parentremove.remove()
+                }
+                
+                //removeworkgallery.remove()
+            
+                //gallery.innerHTML=""
+            
+            
+            
+            //return response.json()
+        })
+        /*.then(data=>{
+            console.log('Réponse du serveur :', data);
+            
+            })*/
+           
+           
         })
         
-    });
-    
-     }
-     
+    ;
+ 
+}
+ console.log();
+
 
 //------------------ creation de la banniere edit-mode-------
 function bannerEdit() {
@@ -234,7 +265,9 @@ const btnmodal = document.querySelector(".edit-btn");
 
 
     btnmodal.addEventListener('click',function(){
-        containermodal.style.display='flex';
+         containermodal.style.display='flex';
+        modal.style.display='flex';
+        containeraddphoto.style.display='none'
         
     });
 };
@@ -247,14 +280,15 @@ function closeModal(){
     });
     containermodal.addEventListener('click',function(e){
         if(e.target === this){
-            this.style.display='none'
+            this.style.display='none'  
         }
+        
     });
 };
 
 
  //------------------------ creation add-photo---------------
-
+ const containeraddphoto = document.querySelector('.container-add-photo');
   function addPhoto(){
 const ajoutphoto = `<div class="add-photo">
 	<i class="fa-solid fa-arrow-left"></i>
@@ -281,10 +315,37 @@ const ajoutphoto = `<div class="add-photo">
 </div>
 `;
 containeraddphoto.insertAdjacentHTML("beforeend",ajoutphoto)
-console.log(ajoutphoto);
 
+const btnopenaddphoto = document.querySelector('#container-modal button')
+    //  console.log(btnopenaddphoto); 
+     btnopenaddphoto.addEventListener('click',function(){
+         modal.style.display='none';
+         containeraddphoto.style.display='block'
+    })
+
+returnModaldelete()
+closeAllmodals()
  }
-addPhoto()
+ addPhoto()
+ 
 
-
-
+//------------------------- revenir sur modale uppression photo--------------
+function returnModaldelete() {
+    const returnmodal = document.querySelector('.fa-arrow-left')
+    console.log(returnmodal);
+    returnmodal.addEventListener('click',function(){
+        modal.style.display='flex'
+        containeraddphoto.style.display='none'
+    })
+    
+}
+function closeAllmodals() {
+    const closemodals = document.querySelector('.add-photo .fa-xmark')
+    closemodals.addEventListener('click',function(){
+        containermodal.style.display='none'
+        containeraddphoto.style.display='none'
+        modal.style.display='flex'
+        
+    })
+    
+}

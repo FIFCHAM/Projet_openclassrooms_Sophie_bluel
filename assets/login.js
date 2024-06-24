@@ -1,7 +1,7 @@
 //------------------------------ Login ------------------------------
 
 const formLogin = document.querySelector("#login-form")
-console.log(formLogin);
+// console.log(formLogin);
 const messageDiv = document.querySelector('#message');
 
 
@@ -18,7 +18,7 @@ formLogin.addEventListener("submit", function (e) {
 
     }
     const chargeutile = JSON.stringify(users);
-    console.log(chargeutile);
+    // console.log(chargeutile);
     
     
     
@@ -37,7 +37,7 @@ formLogin.addEventListener("submit", function (e) {
 
             if (response.ok ) {
                 const data = await response.json();
-                console.log(data.token);
+                // console.log(data.token);
                const token = data.token;
                 window.localStorage.setItem('token',token);
                 window.location.href= "../index.html"
@@ -46,6 +46,7 @@ formLogin.addEventListener("submit", function (e) {
             
             else {
                 const errorData = await response.json();
+                console.log(errorData);
                 messageDiv.textContent = ` "Erreur dans l'identifiant ou le mot de passe" `;
 
             }
