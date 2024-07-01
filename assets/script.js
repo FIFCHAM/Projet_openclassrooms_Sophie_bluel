@@ -7,7 +7,7 @@ const filternav = document.querySelector('#filterproject');
 const projetitle = document.querySelector('#project-title')
 
 
-// console.log(containeraddphoto);
+// console.log(containermodalAddphoto);
 const closemodalbtn = document.querySelector('.fa-xmark');
 // console.log(closemodalbtn);
 const headerbanner = document.querySelector('#banner-editmode');
@@ -32,6 +32,7 @@ async function init(){
         openModal()
         closeModal()
         logOut()
+        modalAddphoto()
         
     }
     else{
@@ -44,7 +45,6 @@ async function init(){
         galleryCategory(categories)
         filterProjects(works)
         logIn()
-        
         // console.log('disconected');
     }
     
@@ -99,8 +99,8 @@ async function getCategory() {
  }
 async function galleryWorks(work) {
         const figure =
-        ` <figure class="figure-work" id="${work.id}">
-        <img src=${work.imageUrl} alt="Abajour Tahina">
+        ` <figure class="figure-work" data-id="${work.id}">
+        <img src=${work.imageUrl} alt="${work.title}">
         <figcaption>${work.title}</figcaption>
         </figure>                                             `
         gallery.insertAdjacentHTML("beforeend", figure);
@@ -175,12 +175,12 @@ async function galleryWorksmodal(works) {
     works.forEach(work => {
         
         const figuremodal =
-        ` <figure class="figure-modal" id="${work.id}">
-        <img src=${work.imageUrl} alt="Abajour Tahina">
-        <i class="fa-solid fa-trash-can" id=${work.id}></i>
+        ` <figure class="figure-modal" data-id="${work.id}">
+        <img src=${work.imageUrl} alt="${work.title}">
+        <i class="fa-solid fa-trash-can" data-id="${work.id}"></i>
         </figure>                                             `
         modalgallery.insertAdjacentHTML("beforeend", figuremodal);
-        // console.log(work.id);
+         
     });
     deleTeproject()   
     
@@ -188,18 +188,20 @@ async function galleryWorksmodal(works) {
 //------------------  delete project ----------------------------
 
  async function deleTeproject(){
-    const works = await getWorks()
-    
+
+    const figures = document.querySelectorAll(".figure-work");
+     
     const trashbtn =document.querySelectorAll('.fa-trash-can');
     // console.log(trashbtn);
-    trashbtn.forEach(e => {
-        e.addEventListener('click',async(e)=>{
-            e.preventDefault();
-            const trash = e.target.id;
+    trashbtn.forEach(el => {
+        el.addEventListener('click',async(e)=>{
+            //e.preventDefault();
+            const trash = e.target.dataset.id;
+            
             
             
             const parentremove =e.target.offsetParent;
-            console.log(trash);
+            
             const response = await fetch('http://localhost:5678/api/works/'+ trash ,{
                 method:'DELETE',
                 headers: {
@@ -207,37 +209,31 @@ async function galleryWorksmodal(works) {
                     'Authorization':`Bearer ${token}` 
                 },
             })
-            //   }).then(response=>{
-                if(!response.ok){
+            
+                if(response.ok){
+                    figures.forEach(element => {
+                        console.log(element);
+                        if(element.dataset.id==trash){
+    
+                            element.remove()
+                        } 
+                        });
+                        parentremove.remove()
+                    }
                     
-                    throw new Error('Erreur de la requête : '+ response.statusText);
-                }
-                else{
-                    console.log(response);
-                    
-                    parentremove.remove()
-                }
-                
-                //removeworkgallery.remove()
-            
-                //gallery.innerHTML=""
-            
-            
-            
-            //return response.json()
+                    else{
+                        throw new Error('Erreur de la requête : '+ response.statusText);
+                    }
         })
-        /*.then(data=>{
-            console.log('Réponse du serveur :', data);
-            
-            })*/
+        
            
            
         })
         
-    ;
+    
  
 }
- console.log();
+ 
 
 
 //------------------ creation de la banniere edit-mode-------
@@ -267,7 +263,7 @@ const btnmodal = document.querySelector(".edit-btn");
     btnmodal.addEventListener('click',function(){
          containermodal.style.display='flex';
         modal.style.display='flex';
-        containeraddphoto.style.display='none'
+        containermodalAddphoto.style.display='none'
         
     });
 };
@@ -287,55 +283,59 @@ function closeModal(){
 };
 
 
- //------------------------ creation add-photo---------------
- const containeraddphoto = document.querySelector('.container-add-photo');
-  function addPhoto(){
+ //------------------------ creation modal add-photo---------------
+ const containermodalAddphoto = document.querySelector('.container-add-photo');
+  function modalAddphoto(){
 const ajoutphoto = `<div class="add-photo">
 	<i class="fa-solid fa-arrow-left"></i>
 	<i class="fa-solid fa-xmark"></i>
 	<h3>Ajout photo</h3>
+    <form id="addphoto-form">
 	<div class="photo-container">
 		<i class="fa-regular fa-image"></i>
-		<button>+ Ajouter photo</button>
+        <label>+ Ajouter photo
+		<input type="file" name="file" id="photo-file" accept="image/*">
+        </label>
 		<p>jpg, png : 4mo max</p>
 	</div>
-	<form class="form-add" method="post">
-		<label for="Titre">Titre</label>
-		<input type="text" name="Titre" id="" >
+	<div class="form-add" >
+		<label for="title">Titre</label>
+		<input type="text" name="photo-title" id="photo-title" >
 		<label for="Catégorie">Catégorie</label>
-		<select name="Catégories" id="">
-			<option value="Objets">Objets</option>
-			<option value="Appartements">Appartements</option>
-			<option value="Hotels & restaurants">Hotels & restaurants</option>
+		<select name="Catégories" id="photo-categorie">
+			<option value="1" >Objets</option>
+			<option value="2" >Appartements</option>
+			<option value="3" >Hotels & restaurants</option>
 		</select> 
 		<hr>
-		<button type="submit">Valider</button>
-	</form>
-
+		<button type="submit" value="Valider" id="validphoto">Valider</button>
+	</div>
+    </form>
 </div>
 `;
-containeraddphoto.insertAdjacentHTML("beforeend",ajoutphoto)
+containermodalAddphoto.insertAdjacentHTML("beforeend",ajoutphoto)
 
-const btnopenaddphoto = document.querySelector('#container-modal button')
-    //  console.log(btnopenaddphoto); 
-     btnopenaddphoto.addEventListener('click',function(){
+const btnopenmodalAddphoto = document.querySelector('#container-modal button')
+    //  console.log(btnopenmodalAddphoto); 
+     btnopenmodalAddphoto.addEventListener('click',function(){
          modal.style.display='none';
-         containeraddphoto.style.display='block'
+         containermodalAddphoto.style.display='block'
     })
 
 returnModaldelete()
 closeAllmodals()
+addPhoto()
+photoInput()
  }
- addPhoto()
+ 
  
 
-//------------------------- revenir sur modale uppression photo--------------
+//------------------------- revenir sur modale suppression photo--------------
 function returnModaldelete() {
     const returnmodal = document.querySelector('.fa-arrow-left')
-    console.log(returnmodal);
     returnmodal.addEventListener('click',function(){
         modal.style.display='flex'
-        containeraddphoto.style.display='none'
+        containermodalAddphoto.style.display='none'
     })
     
 }
@@ -343,9 +343,75 @@ function closeAllmodals() {
     const closemodals = document.querySelector('.add-photo .fa-xmark')
     closemodals.addEventListener('click',function(){
         containermodal.style.display='none'
-        containeraddphoto.style.display='none'
+        containermodalAddphoto.style.display='none'
         modal.style.display='flex'
         
     })
+    
+}
+//--------------------- ajout de nouveau projet ----------
+
+async function addPhoto() {
+    const photofile = document.getElementById('photo-file');
+    console.log(photofile);
+    const phototitle = document.getElementById('photo-title');
+    const photocategorie = document.querySelector('#photo-categorie');
+    const btnvalidphoto = document.getElementById('validphoto');
+    // console.log(photofile);
+    const formData = new FormData();
+
+    formData.append('image',photofile.files[0]);
+    formData.append('title',phototitle.value);
+    formData.append('category',photocategorie.value);
+    console.log(phototitle.value);
+    return
+    
+
+    btnvalidphoto.addEventListener('click',async(e)=>{
+        e.preventDefault();
+        
+        const response = await fetch('http://localhost:5678/api/works',{
+            method:'POST',
+            headers: {
+                "Content-Type": "application/json",
+                'Authorization':`Bearer ${token}` 
+            },
+            body:formData,
+        })
+        
+            if(response.ok){
+                console.log("photo ajouté");
+                
+                }
+                
+                else{
+                    throw new Error('Erreur de la requête : '+ response.statusText);
+                }
+
+
+    })
+    
+}
+function photoInput() {
+    const photocontainer = document.querySelector('.photo-container');
+    
+    const imgfile =document.querySelector('#photo-file')
+    imgfile.addEventListener('change',function(e) {
+        const file=e.target.files[0];
+        if(file){
+            const reader = new FileReader();
+            reader.onload=function(e){
+                const imgsource=e.target.result;
+                const img=`<img src="${imgsource}" alt="Image sélectionnée">`
+
+                photocontainer.innerHTML='';
+                photocontainer.insertAdjacentHTML('afterbegin',img)
+            }
+            reader.readAsDataURL(file);
+        }
+
+        
+    })
+
     
 }

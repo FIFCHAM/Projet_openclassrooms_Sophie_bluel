@@ -39,7 +39,7 @@ formLogin.addEventListener("submit", function (e) {
                 const data = await response.json();
                 // console.log(data.token);
                const token = data.token;
-                window.localStorage.setItem('token',token);
+               localStorage.setItem('token',token);
                 window.location.href= "../index.html"
 
             }
