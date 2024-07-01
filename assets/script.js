@@ -360,20 +360,20 @@ async function addPhoto() {
     // console.log(photofile);
     const formData = new FormData();
 
-    formData.append('image',photofile.files[0]);
-    formData.append('title',phototitle.value);
-    formData.append('category',photocategorie.value);
-    console.log(phototitle.value);
-    return
     
-
+    
+    
     btnvalidphoto.addEventListener('click',async(e)=>{
         e.preventDefault();
+        formData.append('image',photofile.files[0]);
+        formData.append('title',phototitle.value);
+        formData.append('category',photocategorie.value);
+        
         
         const response = await fetch('http://localhost:5678/api/works',{
             method:'POST',
             headers: {
-                "Content-Type": "application/json",
+               
                 'Authorization':`Bearer ${token}` 
             },
             body:formData,
