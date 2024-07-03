@@ -212,7 +212,7 @@ async function galleryWorksmodal(works) {
             
                 if(response.ok){
                     figures.forEach(element => {
-                        console.log(element);
+                        
                         if(element.dataset.id==trash){
     
                             element.remove()
@@ -281,14 +281,25 @@ function closeModal(){
         
     });
 };
-
+//--------------------- open modal add-photo-----------------
+function btnmodalegalleryAddphto() {
+    
+    const btnopenmodalAddphoto = document.querySelector('#container-modal button')
+        //  console.log(btnopenmodalAddphoto); 
+         btnopenmodalAddphoto.addEventListener('click',function(){
+             modal.style.display='none';
+             containermodalAddphoto.style.display='block'
+        })
+}
 
  //------------------------ creation modal add-photo---------------
  const containermodalAddphoto = document.querySelector('.container-add-photo');
-  function modalAddphoto(){
-const ajoutphoto = `<div class="add-photo">
-	<i class="fa-solid fa-arrow-left"></i>
-	<i class="fa-solid fa-xmark"></i>
+  async function modalAddphoto(){
+    const category = await getCategory()
+    
+      const ajoutphoto = `<div class="add-photo">
+      <i class="fa-solid fa-arrow-left"></i>
+	<i class="fa-solid fa-xmark" type"reset"></i>
 	<h3>Ajout photo</h3>
     <form id="addphoto-form">
 	<div class="photo-container">
@@ -303,34 +314,28 @@ const ajoutphoto = `<div class="add-photo">
 		<input type="text" name="photo-title" id="photo-title" >
 		<label for="Catégorie">Catégorie</label>
 		<select name="Catégories" id="photo-categorie">
-			<option value="1" >Objets</option>
-			<option value="2" >Appartements</option>
-			<option value="3" >Hotels & restaurants</option>
-		</select> 
-		<hr>
-		<button type="submit" value="Valider" id="validphoto">Valider</button>
-	</div>
-    </form>
+			<option value=${category[0].id} >"${category[0].name}"</option>
+			<option value=${category[1].id} >"${category[1].name}"</option>
+			<option value=${category[2].id} >"${category[2].name}"</option>
+            </select> 
+            <hr>
+            <button type="submit" value="Valider" id="validphoto">Valider</button>
+            </div>
+            </form>
 </div>
 `;
 containermodalAddphoto.insertAdjacentHTML("beforeend",ajoutphoto)
 
-const btnopenmodalAddphoto = document.querySelector('#container-modal button')
-    //  console.log(btnopenmodalAddphoto); 
-     btnopenmodalAddphoto.addEventListener('click',function(){
-         modal.style.display='none';
-         containermodalAddphoto.style.display='block'
-    })
-
+btnmodalegalleryAddphto()
 returnModaldelete()
 closeAllmodals()
-addPhoto()
+//addPhoto()
 photoInput()
  }
  
  
 
-//------------------------- revenir sur modale suppression photo--------------
+ //------------------------- revenir sur modale suppression photo--------------
 function returnModaldelete() {
     const returnmodal = document.querySelector('.fa-arrow-left')
     returnmodal.addEventListener('click',function(){
@@ -346,20 +351,25 @@ function closeAllmodals() {
         containermodalAddphoto.style.display='none'
         modal.style.display='flex'
         
+        
     })
     
 }
 //--------------------- ajout de nouveau projet ----------
 
 async function addPhoto() {
+    
+    
+    
+    const addphotoform = document.querySelector('#addphoto-form')
+    console.log(addphotoform);
     const photofile = document.getElementById('photo-file');
-    console.log(photofile);
     const phototitle = document.getElementById('photo-title');
     const photocategorie = document.querySelector('#photo-categorie');
     const btnvalidphoto = document.getElementById('validphoto');
     // console.log(photofile);
     const formData = new FormData();
-
+    
     
     
     
@@ -370,31 +380,45 @@ async function addPhoto() {
         formData.append('category',photocategorie.value);
         
         
+        
         const response = await fetch('http://localhost:5678/api/works',{
             method:'POST',
             headers: {
-               
                 'Authorization':`Bearer ${token}` 
             },
             body:formData,
         })
         
-            if(response.ok){
-                console.log("photo ajouté");
-                
-                }
-                
-                else{
-                    throw new Error('Erreur de la requête : '+ response.statusText);
-                }
-
-
+        if(response.ok){
+            console.log("photo ajouté");
+            //containermodal.style.display='none'
+            const newwork= await response.json();
+            
+            console.log(photofile);
+            
+            
+            
+            
+            newimgmodalGallery(newwork)
+            newimgGallery(newwork)
+            
+            
+            
+        }
+        else{
+            throw new Error('Erreur de la requête : '+ response.statusText);
+        }
+        
+        
     })
     
 }
-function photoInput() {
-    const photocontainer = document.querySelector('.photo-container');
+function photoInput(){
     
+    const photocontainer = document.querySelector('.photo-container');
+    const labelfil =document.querySelector(".photo-container label");
+    const iconfile = document.querySelector(".photo-container i");
+    const pfile= document.querySelector(".photo-container p");
     const imgfile =document.querySelector('#photo-file')
     imgfile.addEventListener('change',function(e) {
         const file=e.target.files[0];
@@ -403,15 +427,33 @@ function photoInput() {
             reader.onload=function(e){
                 const imgsource=e.target.result;
                 const img=`<img src="${imgsource}" alt="Image sélectionnée">`
-
-                photocontainer.innerHTML='';
-                photocontainer.insertAdjacentHTML('afterbegin',img)
+                //labelfil.style.display='none';
+                //iconfile.style.display='none';
+               // pfile.style.display='none';
+               photocontainer.innerHTML=''
+                photocontainer.insertAdjacentHTML('afterbegin',img);
+                 
             }
             reader.readAsDataURL(file);
+            addPhoto()
         }
-
         
     })
+}
+async function newimgmodalGallery(work) {
+    const newfiguremodal =
+    ` <figure class="figure-modal" data-id="${work.id}">
+    <img src=${work.imageUrl} alt="${work.title}">
+    <i class="fa-solid fa-trash-can" data-id="${work.id}"></i>
+    </figure>                                             `
+    modalgallery.insertAdjacentHTML("beforeend", newfiguremodal)
+}
 
-    
+async function newimgGallery(work){
+    const newfigure =
+        ` <figure class="figure-work" data-id="${work.id}">
+        <img src=${work.imageUrl} alt="${work.title}">
+        <figcaption>${work.title}</figcaption>
+        </figure>                                             `
+        gallery.insertAdjacentHTML("beforeend", newfigure);
 }
