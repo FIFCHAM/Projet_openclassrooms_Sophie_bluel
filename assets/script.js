@@ -195,46 +195,40 @@ async function galleryWorksmodal(works) {
     // console.log(trashbtn);
     trashbtn.forEach(el => {
         el.addEventListener('click',async(e)=>{
-            //e.preventDefault();
+            e.preventDefault();
             const trash = e.target.dataset.id;
-            
-            
             
             const parentremove =e.target.offsetParent;
             
+                
             const response = await fetch('http://localhost:5678/api/works/'+ trash ,{
-                method:'DELETE',
-                headers: {
-                    "Content-Type": "application/json",
-                    'Authorization':`Bearer ${token}` 
-                },
-            })
-            
+                    method:'DELETE',
+                    headers: {
+                        "Content-Type": "application/json",
+                        'Authorization':`Bearer ${token}` 
+                    },
+                })
+                
                 if(response.ok){
                     figures.forEach(element => {
                         
                         if(element.dataset.id==trash){
-    
+                            
                             element.remove()
                         } 
-                        });
-                        parentremove.remove()
-                    }
-                    
-                    else{
-                        throw new Error('Erreur de la requête : '+ response.statusText);
-                    }
-        })
-        
-           
-           
-        })
-        
-    
+                    });
+                    parentremove.remove()
+                }
+                
+                else{
+                    throw new Error('Erreur de la requête : '+ response.statusText);
+                }
+            
+            })
+                    })
+                     
+    }
  
-}
- 
-
 
 //------------------ creation de la banniere edit-mode-------
 function bannerEdit() {
@@ -329,7 +323,7 @@ containermodalAddphoto.insertAdjacentHTML("beforeend",ajoutphoto)
 btnmodalegalleryAddphto()
 returnModaldelete()
 closeAllmodals()
-//addPhoto()
+addPhoto()
 photoInput()
  }
  
@@ -358,11 +352,9 @@ function closeAllmodals() {
 //--------------------- ajout de nouveau projet ----------
 
 async function addPhoto() {
+            
     
-    
-    
-    const addphotoform = document.querySelector('#addphoto-form')
-    console.log(addphotoform);
+    const addphotoform = document.querySelector('#addphoto-form');
     const photofile = document.getElementById('photo-file');
     const phototitle = document.getElementById('photo-title');
     const photocategorie = document.querySelector('#photo-categorie');
@@ -384,7 +376,8 @@ async function addPhoto() {
         const response = await fetch('http://localhost:5678/api/works',{
             method:'POST',
             headers: {
-                'Authorization':`Bearer ${token}` 
+                Accept: "application/json",
+                Authorization:`Bearer ${token}` 
             },
             body:formData,
         })
@@ -394,15 +387,10 @@ async function addPhoto() {
             //containermodal.style.display='none'
             const newwork= await response.json();
             
-            console.log(photofile);
-            
-            
-            
-            
-            newimgmodalGallery(newwork)
+            console.log(newwork);
             newimgGallery(newwork)
-            
-            
+            newimgmodalGallery(newwork)
+            addphotoform.reset()
             
         }
         else{
@@ -414,9 +402,8 @@ async function addPhoto() {
     
 }
 function photoInput(){
-    
     const photocontainer = document.querySelector('.photo-container');
-    const labelfil =document.querySelector(".photo-container label");
+    const labelfile =document.querySelector(".photo-container label");
     const iconfile = document.querySelector(".photo-container i");
     const pfile= document.querySelector(".photo-container p");
     const imgfile =document.querySelector('#photo-file')
@@ -427,7 +414,7 @@ function photoInput(){
             reader.onload=function(e){
                 const imgsource=e.target.result;
                 const img=`<img src="${imgsource}" alt="Image sélectionnée">`
-                //labelfil.style.display='none';
+                //labelfile.style.display='none';
                 //iconfile.style.display='none';
                // pfile.style.display='none';
                photocontainer.innerHTML=''
@@ -435,7 +422,7 @@ function photoInput(){
                  
             }
             reader.readAsDataURL(file);
-            addPhoto()
+            //addPhoto()
         }
         
     })
@@ -447,8 +434,29 @@ async function newimgmodalGallery(work) {
     <i class="fa-solid fa-trash-can" data-id="${work.id}"></i>
     </figure>                                             `
     modalgallery.insertAdjacentHTML("beforeend", newfiguremodal)
+   /* const newtrashbtn =document.querySelectorAll(".fa-trash-can ");
+    const figures = document.querySelectorAll(".figure-work")
+    console.log(figures);
+    for( trash of newtrashbtn){
+        trash.addEventListener('click',async(e)=>{
+           e.target.offsetParent.remove()
+            const etrash = e.target.dataset.id
+            
+            for( f of figures ){
+                console.log(f.dataset.id);
+                if(f.dataset.id===etrash){
+                    
+                    f.remove()
+                    console.log(f);
+                }else{
+                    console.log('erreur');
+                }
+            }
+            
+        })
+    }*/
+   deleTeproject()
 }
-
 async function newimgGallery(work){
     const newfigure =
         ` <figure class="figure-work" data-id="${work.id}">
