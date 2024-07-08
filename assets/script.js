@@ -162,7 +162,7 @@ async function filterProjects(works) {
     });
 }
 
-//------------------------- edit mod----------------------------------
+//------------------------- admin mode ------------------------------
 
 //-------------------------- modale-------------------------
 const modalgallery = document.querySelector('.modal-gallery');
@@ -313,7 +313,7 @@ function btnmodalegalleryAddphto() {
 			<option value=${category[2].id} >"${category[2].name}"</option>
             </select> 
             <hr>
-            <button type="submit" value="Valider" id="validphoto">Valider</button>
+            <button   id="validphoto" disabled >Valider</button>
             </div>
             </form>
 </div>
@@ -323,8 +323,10 @@ containermodalAddphoto.insertAdjacentHTML("beforeend",ajoutphoto)
 btnmodalegalleryAddphto()
 returnModaldelete()
 closeAllmodals()
+checkInput()
 addPhoto()
 photoInput()
+
  }
  
  
@@ -351,22 +353,38 @@ function closeAllmodals() {
 }
 //--------------------- ajout de nouveau projet ----------
 
-async function addPhoto() {
-            
-    
+//--------------------- verifier si l'utilisateur remplis le formulaire----
+function checkInput() {
     const addphotoform = document.querySelector('#addphoto-form');
     const photofile = document.getElementById('photo-file');
     const phototitle = document.getElementById('photo-title');
     const photocategorie = document.querySelector('#photo-categorie');
     const btnvalidphoto = document.getElementById('validphoto');
-    // console.log(photofile);
-    const formData = new FormData();
+
+    addphotoform.addEventListener('input',function(){
+        if(photofile.value !=="" && phototitle.value !=="" && photocategorie.value !=="" ){
+           
+            btnvalidphoto.disabled = false
+            btnvalidphoto.style.background='green'
+        }
+        else{
+            btnvalidphoto.disabled=true
+            btnvalidphoto.style.backgroundColor='#a7a7a7'
+        }
+
+    })  
+}
+
+async function addPhoto() {
+     const photofile = document.getElementById('photo-file');       
+     const phototitle = document.getElementById('photo-title');
+    const photocategorie = document.querySelector('#photo-categorie');
+    const btnvalidphoto = document.getElementById('validphoto');
+    const addphotoform = document.querySelector('#addphoto-form');
     
-    
-    
-    
-    btnvalidphoto.addEventListener('click',async(e)=>{
+    addphotoform.addEventListener('submit',async(e)=>{
         e.preventDefault();
+        const formData = new FormData(addphotoform);
         formData.append('image',photofile.files[0]);
         formData.append('title',phototitle.value);
         formData.append('category',photocategorie.value);
@@ -384,13 +402,18 @@ async function addPhoto() {
         
         if(response.ok){
             console.log("photo ajouté");
-            //containermodal.style.display='none'
+            
             const newwork= await response.json();
             
             console.log(newwork);
             newimgGallery(newwork)
             newimgmodalGallery(newwork)
-            addphotoform.reset()
+            
+            newPreviewimg()
+            //modalAddphoto()
+            
+             
+            
             
         }
         else{
@@ -399,7 +422,7 @@ async function addPhoto() {
         
         
     })
-    
+//---------------------- create img preview -----------------------   
 }
 function photoInput(){
     const photocontainer = document.querySelector('.photo-container');
@@ -414,19 +437,42 @@ function photoInput(){
             reader.onload=function(e){
                 const imgsource=e.target.result;
                 const img=`<img src="${imgsource}" alt="Image sélectionnée">`
-                //labelfile.style.display='none';
-                //iconfile.style.display='none';
-               // pfile.style.display='none';
+                labelfile.style.display='none';
+                iconfile.style.display='none';
+                pfile.style.display='none';
                photocontainer.innerHTML=''
                 photocontainer.insertAdjacentHTML('afterbegin',img);
                  
             }
             reader.readAsDataURL(file);
-            //addPhoto()
+            
         }
         
     })
 }
+function newPreviewimg() {
+    const containermodalAddphoto = document.querySelector('.container-add-photo');
+    containermodalAddphoto.innerHTML='';
+    modalAddphoto()
+    /*const photocontainer = document.querySelector('.photo-container');
+    photocontainer.innerHTML='';
+    console.log(photocontainer);
+    const img = document.querySelector('.photocontainer img')
+    const newpreviewimg = 
+    `<i class="fa-regular fa-image"></i>
+    <label>+ Ajouter photo
+    <input type="file" name="file" id="photo-file" accept="image/*">
+    </label>
+    <p>jpg, png : 4mo max</p
+    
+    ` 
+    photocontainer.insertAdjacentHTML('afterbegin',newpreviewimg)
+    photoInput()
+    img.remove()*/
+    
+}
+ 
+//-------------------------   display new projet modalgallery-------------------- 
 async function newimgmodalGallery(work) {
     const newfiguremodal =
     ` <figure class="figure-modal" data-id="${work.id}">
@@ -457,6 +503,8 @@ async function newimgmodalGallery(work) {
     }*/
    deleTeproject()
 }
+
+//------------------------------- display new projet gallerry-----------
 async function newimgGallery(work){
     const newfigure =
         ` <figure class="figure-work" data-id="${work.id}">
