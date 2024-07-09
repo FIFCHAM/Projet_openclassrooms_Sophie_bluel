@@ -24,7 +24,7 @@ async function init(){
     const connected = token ? true : false;
     
     if(connected){
-        // console.log('connecté');
+        
         const works= await getWorks()
        loopGalleryworks(works)
         galleryWorksmodal(works)
@@ -45,8 +45,7 @@ async function init(){
         galleryCategory(categories)
         filterProjects(works)
         logIn()
-        // console.log('disconected');
-    }
+            }
     
 }
 init()
@@ -409,6 +408,10 @@ async function addPhoto() {
             newimgGallery(newwork)
             newimgmodalGallery(newwork)
             
+            
+            
+            
+            
             newPreviewimg()
             //modalAddphoto()
             
@@ -437,9 +440,9 @@ function photoInput(){
             reader.onload=function(e){
                 const imgsource=e.target.result;
                 const img=`<img src="${imgsource}" alt="Image sélectionnée">`
-                labelfile.style.display='none';
-                iconfile.style.display='none';
-                pfile.style.display='none';
+                //labelfile.style.display='none';
+               // iconfile.style.display='none';
+                //file.style.display='none';
                photocontainer.innerHTML=''
                 photocontainer.insertAdjacentHTML('afterbegin',img);
                  
@@ -450,25 +453,29 @@ function photoInput(){
         
     })
 }
+//----------------------------------- add photo but no reload the page -----------
 function newPreviewimg() {
-    const containermodalAddphoto = document.querySelector('.container-add-photo');
-    containermodalAddphoto.innerHTML='';
-    modalAddphoto()
-    /*const photocontainer = document.querySelector('.photo-container');
-    photocontainer.innerHTML='';
-    console.log(photocontainer);
-    const img = document.querySelector('.photocontainer img')
-    const newpreviewimg = 
-    `<i class="fa-regular fa-image"></i>
-    <label>+ Ajouter photo
-    <input type="file" name="file" id="photo-file" accept="image/*">
-    </label>
+     const containermodalAddphoto = document.querySelector('.container-add-photo');
+     containermodalAddphoto.innerHTML='';
+    
+     modalAddphoto()
+     
+   /*const photocontainer = document.querySelector('.photo-container');
+   photocontainer.innerHTML='';
+   console.log(photocontainer);
+   //const newimg = document.querySelector('.photocontainer img')
+   const newpreviewimg = 
+   `<i class="fa-regular fa-image"></i>
+   <label>+ Ajouter photo
+   <input type="file" name="file" id="photo-file" accept="image/*">
+   </label>
     <p>jpg, png : 4mo max</p
     
     ` 
-    photocontainer.insertAdjacentHTML('afterbegin',newpreviewimg)
-    photoInput()
-    img.remove()*/
+    photocontainer.insertAdjacentHTML('afterbegin',newpreviewimg)*/
+    
+    
+    
     
 }
  
@@ -480,31 +487,11 @@ async function newimgmodalGallery(work) {
     <i class="fa-solid fa-trash-can" data-id="${work.id}"></i>
     </figure>                                             `
     modalgallery.insertAdjacentHTML("beforeend", newfiguremodal)
-   /* const newtrashbtn =document.querySelectorAll(".fa-trash-can ");
-    const figures = document.querySelectorAll(".figure-work")
-    console.log(figures);
-    for( trash of newtrashbtn){
-        trash.addEventListener('click',async(e)=>{
-           e.target.offsetParent.remove()
-            const etrash = e.target.dataset.id
-            
-            for( f of figures ){
-                console.log(f.dataset.id);
-                if(f.dataset.id===etrash){
-                    
-                    f.remove()
-                    console.log(f);
-                }else{
-                    console.log('erreur');
-                }
-            }
-            
-        })
-    }*/
+   
    deleTeproject()
 }
 
-//------------------------------- display new projet gallerry-----------
+//------------------------------- display new projet gallery-----------
 async function newimgGallery(work){
     const newfigure =
         ` <figure class="figure-work" data-id="${work.id}">

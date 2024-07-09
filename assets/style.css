@@ -175,20 +175,20 @@ h2 {
 	color: #1D6154
 }
 
- nav ul {
+nav ul {
 	display: flex;
 	align-items: center;
 	list-style-type: none;
 
 }
 
- nav li {
+nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
 	cursor: pointer;
 }
 
- header nav li:hover {
+header nav li:hover {
 	color: #B1663C;
 }
 
@@ -225,11 +225,12 @@ h2 {
 	margin-bottom: 1em;
 	margin-top: 132px;
 }
-#portfolio a{
+
+#portfolio a {
 	display: flex;
 }
-
-#filterproject  {
+/************************************** filtres gallerie ******************************************/
+#filterproject {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -250,7 +251,7 @@ h2 {
 	color: #1d6154;
 	padding-left: 20px;
 	padding-right: 20px;
-	
+
 }
 
 
@@ -269,6 +270,7 @@ h2 {
 	background-color: #1D6154;
 
 }
+
 .gallery {
 	width: 100%;
 	display: grid;
@@ -278,9 +280,10 @@ h2 {
 }
 
 .gallery img {
-	width: 100%;
-
+	width: 304px;
+    height: 407px;
 }
+
 
 #contact {
 	width: 50%;
@@ -335,29 +338,34 @@ footer nav ul {
 	justify-content: flex-end;
 	margin: 2em
 }
+
 /********************* login***********************/
-.btnlogin{
+.btnlogin {
 	font-family: 'Work Sans';
-font-size: 16px;
-font-weight: 600;
-line-height: 18.77px;
-text-align: center;
+	font-size: 16px;
+	font-weight: 600;
+	line-height: 18.77px;
+	text-align: center;
 
 }
-.login-container{
+
+.login-container {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 }
-#login-form{
+
+#login-form {
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
 }
-#login-form h2{
+
+#login-form h2 {
 	margin-bottom: 60px;
 }
+
 .form-group {
 	display: flex;
 	flex-direction: column;
@@ -366,125 +374,139 @@ text-align: center;
 	font-weight: 500;
 	line-height: 16.42px;
 	text-align: left;
-	}
-	#login-form :nth-last-child(3){
-		margin-top: 52px;
+}
 
-	}
-.form-group input{
+#login-form :nth-last-child(3) {
+	margin-top: 52px;
+
+}
+
+.form-group input {
 	width: 379px;
 	height: 51px;
 	box-shadow: 0px 4px 14px 0px #00000017;
 	border: none;
 	margin-top: 7px;
 }
-#login-form button{
+
+#login-form button {
 	margin-top: 37px;
 	width: 179px;
-height: 36px;
-border-radius: 60px ;
-font-family: 'Syne';
-font-size: 14px;
-font-weight: 700;
-line-height: 16.8px;
-text-align: center;
-color: #FFFFFF;
-background: #1D6154;
-border: none;
-transition: all 1s ease-out;
+	height: 36px;
+	border-radius: 60px;
+	font-family: 'Syne';
+	font-size: 14px;
+	font-weight: 700;
+	line-height: 16.8px;
+	text-align: center;
+	color: #FFFFFF;
+	background: #1D6154;
+	border: none;
+	transition: all 1s ease-out;
 }
-#login-form button:hover{
+
+#login-form button:hover {
 	margin-top: 37px;
 	width: 179px;
-height: 36px;
-border-radius: 60px ;
-font-family: 'Syne';
-font-size: 14px;
-font-weight: 700;
-line-height: 16.8px;
-text-align: center;
-color: #FFFFFF;
-background: #1D6154;
-opacity: 0.8;
+	height: 36px;
+	border-radius: 60px;
+	font-family: 'Syne';
+	font-size: 14px;
+	font-weight: 700;
+	line-height: 16.8px;
+	text-align: center;
+	color: #FFFFFF;
+	background: #1D6154;
+	opacity: 0.8;
 
 }
 
-#login-form a{
+#login-form a {
 	margin-top: 28px;
 	font-family: 'Work Sans';
-font-size: 14px;
-font-weight: 500;
-line-height: 16.42px;
-text-align: left;
-color: #3D3D3D;
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 16.42px;
+	text-align: left;
+	color: #3D3D3D;
 
 }
-#message{
+
+#message {
 	margin-top: 10px;
-    color: red;
-    text-align: center;
+	color: red;
+	text-align: center;
 }
-#project-title{
+
+#project-title {
 	display: flex;
 	justify-content: center;
-	align-items:end;
+	align-items: end;
 }
-.edit-btn{
+/*********************************************** mode edition ************************************/
+.edit-btn {
 
 	margin-bottom: 34px;
-    margin-right: 31px;
+	margin-right: 31px;
 	text-decoration: none;
 	color: #000;
 	cursor: pointer;
 }
-.edit-btn i{
+
+.edit-btn i {
 	display: flex;
 	gap: 10px;
 }
-.edit-btn p{
+
+.edit-btn p {
 	font-family: 'Work Sans';
-font-size: 14px;
-font-weight: 400;
-line-height: 16.42px;
-text-align: center;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 16.42px;
+	text-align: center;
 
 }
-.banner-editmode{
+
+.banner-editmode {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	background-color: #000;
 	height: 59px;
 }
-.banner-editmode i{
+
+.banner-editmode i {
 	display: flex;
 	align-items: center;
 	gap: 10px;
 	color: #FFFFFF;
 }
-.banner-editmode p{
-color: #FFFFFF;
-font-family:'Work Sans';
-font-size: 16px;
-font-weight: 400;
-line-height: 18.77px;
-text-align: center;
+
+.banner-editmode p {
+	color: #FFFFFF;
+	font-family: 'Work Sans';
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 18.77px;
+	text-align: center;
 
 
 }
-#container-modal{
+/*********************************************************** modale ******************************************/
+#container-modal {
 	display: none;
 	justify-content: center;
 	align-items: center;
 	position: fixed;
-	width:100% ;
-height: 100%;
-top: 0;
-left: 0;
-background: rgba(0, 0, 0, 0.4);
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	background: rgba(0, 0, 0, 0.4);
 
 }
-.modal{
+
+.modal {
 	position: relative;
 	display: flex;
 	justify-content: center;
@@ -492,11 +514,12 @@ background: rgba(0, 0, 0, 0.4);
 	flex-direction: column;
 	background: #FFFFFF;
 	width: 630px;
-height: 688px;
-border-radius: 10px;
+	height: 688px;
+	border-radius: 10px;
 }
-.modal i{
-	position:absolute;
+
+.modal i {
+	position: absolute;
 	top: 26px;
 	right: 32px;
 	width: 12px;
@@ -505,55 +528,62 @@ border-radius: 10px;
 	cursor: pointer;
 
 }
-.modal h3{
+
+.modal h3 {
 	font-family: 'Work Sans';
-font-size: 26px;
-font-weight: 400;
-line-height: 30.5px;
-text-align: center;
-color: #000;
+	font-size: 26px;
+	font-weight: 400;
+	line-height: 30.5px;
+	text-align: center;
+	color: #000;
 }
-.modal hr{
+
+.modal hr {
 	width: 420px;
-height: 0px;
+	height: 0px;
 	border: 1px solid #B3B3B3;
 	margin-top: 67.3px;
 }
-.modal button{
+
+.modal button {
 	width: 237px;
-height: 36px;
-border-radius: 60px ;
-color: #FFFFFF;
-background-color: #1D6154;
-font-family: 'Syne';
-font-size: 14px;
-font-weight: 700;
-line-height: 16.8px;
-text-align: center;
-border: none;
-margin-top: 38px;
-cursor: pointer;
+	height: 36px;
+	border-radius: 60px;
+	color: #FFFFFF;
+	background-color: #1D6154;
+	font-family: 'Syne';
+	font-size: 14px;
+	font-weight: 700;
+	line-height: 16.8px;
+	text-align: center;
+	border: none;
+	margin-top: 38px;
+	cursor: pointer;
 }
-.modal-gallery{
-	
-		display: grid;
-		grid-template-columns: repeat(5, 1fr);
-		grid-template-rows: repeat(3, 1fr);
-		grid-column-gap: 9px;
-		grid-row-gap: 29px;
-		margin-top: 38px;
-		
+
+.modal-gallery {
+
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	grid-template-rows: repeat(3, 1fr);
+	grid-column-gap: 9px;
+	grid-row-gap: 29px;
+	margin-top: 38px;
+
 }
-.modal-gallery img{
+
+.modal-gallery img {
 	width: 76.61px;
-height: 102.57px;
+	height: 102.57px;
 
 
 }
-.figure-modal{
+
+.figure-modal {
 	position: relative;
 }
-.figure-modal i{
+
+.figure-modal i {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -561,19 +591,21 @@ height: 102.57px;
 	top: 6px;
 	right: 6px;
 	width: 17px;
-height: 17px;
-font-size: x-small;
-color: #FFFFFF;
-border-radius: 2px;
-background: #000;
-cursor: pointer;
+	height: 17px;
+	font-size: x-small;
+	color: #FFFFFF;
+	border-radius: 2px;
+	background: #000;
+	cursor: pointer;
 
 }
+
 /******************************* modale add-photo ***********************/
-.container-add-photo{
+.container-add-photo {
 	display: none;
 }
-.add-photo{
+
+.add-photo {
 	position: relative;
 	display: flex;
 	align-items: center;
@@ -583,156 +615,169 @@ cursor: pointer;
 	background-color: #ffffff;
 	border-radius: 10px;
 }
-.fa-arrow-left{
+
+.fa-arrow-left {
 	position: absolute;
 	top: 26px;
-	left:30px ;
+	left: 30px;
 	color: #000;
 	width: 21px;
-height: 18.01px;
-cursor: pointer;
+	height: 18.01px;
+	cursor: pointer;
 }
-.add-photo .fa-xmark{
+
+.add-photo .fa-xmark {
 	position: absolute;
 	top: 26px;
-	right:30px ;
+	right: 30px;
 	color: #000;
 	width: 24px;
-height: 24px;
-cursor: pointer;
+	height: 24px;
+	cursor: pointer;
 }
-.add-photo h3{
+
+.add-photo h3 {
 	font-family: 'Work Sans';
-font-size: 26px;
-font-weight: 400;
-line-height: 30.5px;
-text-align: center;
-color: #000;
-margin-top: 60px;
+	font-size: 26px;
+	font-weight: 400;
+	line-height: 30.5px;
+	text-align: center;
+	color: #000;
+	margin-top: 60px;
 }
-.photo-container{
+
+.photo-container {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
 	width: 420px;
-height: 169px;
-background: #E8F1F6;
-margin-top: 36px;
-border-radius: 3px;
+	height: 169px;
+	background: #E8F1F6;
+	margin-top: 36px;
+	border-radius: 3px;
 }
-.photo-container img{
+
+.photo-container img {
 	width: 129px;
-height: 193px;
+	height: 193px;
 
 }
-.photo-container label{
+
+.photo-container label {
 	width: 173px;
-height: 36px;
-border-radius: 50px;
-font-family:' Work Sans';
-font-size: 14px;
-font-weight: 500;
-line-height: 35px;
-text-align: center;
-color: #306685;
-background: #CBD6DC;
-border: none;
-margin-top: 6px;
-cursor: pointer;
+	height: 36px;
+	border-radius: 50px;
+	font-family: ' Work Sans';
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 35px;
+	text-align: center;
+	color: #306685;
+	background: #CBD6DC;
+	border: none;
+	margin-top: 6px;
+	cursor: pointer;
 
 }
-#photo-file{
-	
-opacity: 0;
 
+#photo-file {
+	opacity: 0;
 }
+
 .fa-image {
-    font-size: 69px;
-    color: #B9C5CC;
+	font-size: 69px;
+	color: #B9C5CC;
 }
-.photo-container p{
+
+.photo-container p {
 	font-family: 'Work Sans';
-font-size: 10px;
-font-weight: 400;
-line-height: 11.73px;
-text-align: center;
-margin-top: 10px;
+	font-size: 10px;
+	font-weight: 400;
+	line-height: 11.73px;
+	text-align: center;
+	margin-top: 10px;
 
 }
-.form-add{
+
+.form-add {
 	display: flex;
 	margin-top: 56px;
 	justify-content: center;
 	flex-direction: column;
-	
+
 }
-.form-add :nth-child(3){
+
+.form-add :nth-child(3) {
 	margin-top: 21px;
 }
-.form-add label{
+
+.form-add label {
 	font-family: 'Work Sans';
-font-size: 14px;
-font-weight: 500;
-line-height: 16.42px;
-text-align: left;
-color: #3D3D3D;
-margin-bottom: 10px
-;
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 16.42px;
+	text-align: left;
+	color: #3D3D3D;
+	margin-bottom: 10px;
 }
-.form-add input{
+
+.form-add input {
 	width: 420px;
-height: 51px;
-box-shadow: 0px 4px 14px 0px #00000017;
-border: none;
-font-family:' Work Sans';
-font-size: 14px;
-font-weight: 400;
-line-height: 16.42px;
-text-align: left;
-color: #444444;
-;
+	height: 51px;
+	box-shadow: 0px 4px 14px 0px #00000017;
+	border: none;
+	font-family: ' Work Sans';
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 16.42px;
+	text-align: left;
+	color: #444444;
+	;
 }
-.form-add select{
+
+.form-add select {
 	width: 420px;
 	height: 51px;
 	box-shadow: 0px 4px 14px 0px #00000017;
 	border: none;
 	font-family: 'Work Sans';
-font-size: 14px;
-font-weight: 400;
-line-height: 16.42px;
-text-align: left;
-color: #444444;
-;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 16.42px;
+	text-align: left;
+	color: #444444;
+	;
 }
-.form-add hr{
-margin-top: 47px;
-width: 420px;
-height: 0px;
-border: 1px solid #B3B3B3
 
-
+.form-add hr {
+	margin-top: 47px;
+	width: 420px;
+	height: 0px;
+	border: 1px solid #B3B3B3
 }
-.form-add button{
+
+.form-add button {
 	width: 237px;
 	height: 36px;
-	border-radius: 60px ;
+	border-radius: 60px;
 	background: #A7A7A7;
 	font-family: 'Syne';
-font-size: 14px;
-font-weight: 700;
-line-height: 16.8px;
-text-align: center;
-color: #FFFFFF;
-margin-top: 32px;
-margin-inline: auto;
-cursor: pointer;
-border: none;
+	font-size: 14px;
+	font-weight: 700;
+	line-height: 16.8px;
+	text-align: center;
+	color: #FFFFFF;
+	margin-top: 32px;
+	margin-inline: auto;
+	cursor: pointer;
+	border: none;
 }
-input:focus{
+
+input:focus {
 	outline: none;
 }
-select:focus{
-outline: none;
+
+select:focus {
+	outline: none;
 }

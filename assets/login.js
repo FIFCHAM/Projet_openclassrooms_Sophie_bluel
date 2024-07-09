@@ -18,13 +18,7 @@ formLogin.addEventListener("submit", function (e) {
 
     }
     const chargeutile = JSON.stringify(users);
-    // console.log(chargeutile);
     
-    
-    
-     
-    
-
     async function userLogin() {
         try {
             const response = await fetch('http://localhost:5678/api/users/login ', {
