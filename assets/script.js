@@ -3,7 +3,7 @@
 // ------------------- Les variables
 const gallery = document.querySelector('.gallery ');
 // console.log(gallery);
-const filternav = document.querySelector('#filterproject');
+const filternav = document.querySelector('#filter-nav');
 const projetitle = document.querySelector('#project-title')
 
 
@@ -115,12 +115,13 @@ async function galleryCategory(categories) {
     filternav.insertAdjacentHTML("beforeend", itemall);
     categories.forEach(category => {
         const filteritem =
-            `   
-        <li class="filter-item" id="${category.id}">
+            ` <ul id="filterproject" >
+            <li class="filter-item" id="${category.id}">
+
+            ${category.name}
+            </li>	
+				</ul>  `;
         
-        ${category.name}
-        </li>
-        `;
 
 
         filternav.insertAdjacentHTML("beforeend", filteritem);
