@@ -226,9 +226,7 @@ header nav li:hover {
 	margin-top: 89px;
 }
 
-#portfolio a {
-	display: flex;
-}
+
 /************************************** filtres gallerie ******************************************/
 #filter-nav {
 	display: flex;
